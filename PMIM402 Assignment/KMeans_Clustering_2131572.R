@@ -6,6 +6,5 @@ heart <- read.csv("heart-c.csv")
 
 # create new dataframe with only continuous variables for kmeans
 heart <- heart %>% select(c(age, trestbps, chol, thalach, oldpeak))
-
 heart_norm <- scale(heart) %>% as.data.frame
 View(heart_norm)
