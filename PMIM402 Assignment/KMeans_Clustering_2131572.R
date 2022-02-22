@@ -8,3 +8,5 @@ heart <- read.csv("heart-c.csv")
 heart <- heart %>% select(c(age, trestbps, chol, thalach, oldpeak))
 heart_norm <- scale(heart) %>% as.data.frame
 View(heart_norm)
+
+# adding a comment to make a change
