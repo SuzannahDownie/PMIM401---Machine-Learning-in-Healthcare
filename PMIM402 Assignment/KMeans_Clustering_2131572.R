@@ -60,9 +60,28 @@ heart_clust_5 %>% gather(attribute, value, 1:ncol(heart_clust_5)-1) %>%
   theme_grey()
 
 
+# Hierarchical Clustering
+library(dendextend)
+library(cluster)
 
+# create distance matrix
+# a matrix for use with fviz_nbclust
+dist_1 <- dist(heart_norm, method = "euclidean") %>% as.matrix(dist_1)
 
+# a vector for use with hclust
+dist_2 <- dist(heart_norm, method = 'euclidean')
 
-# dist_mat <- dist(heart_cluster, method = "euclidean")
-# hir_clust <- hclust(dist_mat, method = 'average')
-# plot(hir_clust)
+# use fviz_nbclust to view initial optimal clusters and silhouette plot
+fviz_nbclust(x = dist_1, FUNcluster = hcut, method = "wss")
+fviz_nbclust(x = dist_1, FUNcluster = hcut, method = 'silhouette')
+
+# rm(dist_mat, hir_clust, hir_dend)
+# Create hierarchical cluster model and plot
+hir_clust <- hclust(dist_2, method = 'ward.D') 
+plot(hir_clust, cex = 0.6, hang = -1) 
+rect.hclust(hir_clust, k = 2, border = 2:6)
+abline(h = 80, col = 'blue')
+
+# plot hierarchical cluster with colour branches
+hir_dend <- as.dendrogram(hir_clust)
+plot(color_branches(hir_dend, k = 2), main = 'Cluster Dendrogram - 2 Clusters')
